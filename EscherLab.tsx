@@ -253,7 +253,12 @@ export default function EscherLab() {
   const addInstance = useCallback(() => {
     set(s => {
       const id = Math.random().toString(36).slice(2);
-      return { ...s, instances: [...s.instances, { id, x: 20, y: 20, rot: 0 }] };
+      // Place new tile in the center of the assembly view
+      const canvasW = 1200;
+      const canvasH = 800;
+      const newX = canvasW / 2 - s.tileW / 2;
+      const newY = canvasH / 2 - s.tileH / 2;
+      return { ...s, instances: [...s.instances, { id, x: newX, y: newY, rot: 0 }] };
     });
   }, [set]);
 
@@ -451,11 +456,11 @@ export default function EscherLab() {
 
           <div className="border rounded-xl overflow-hidden relative">
             <svg ref={editorSvgRef} width={tileW} height={tileH} viewBox={`0 0 ${tileW} ${tileH}`} className="w-full h-auto bg-[url('data:image/svg+xml;utf8,')] cursor-crosshair" onClick={onEditorClick}>
-              <Grid w={tileW} h={tileH} step={gridSize} color="#f0f0f0"/>
+              <Grid w={tileW} h={tileH} step={gridSize} color="#d1d5db"/>
               {/* Base Tile Boundary */}
-              <rect x={0} y={0} width={tileW} height={tileH} fill="none" stroke="#e2e8f0" strokeWidth={2}/>
+              <rect x={0} y={0} width={tileW} height={tileH} fill="none" stroke="#a0a0a0" strokeWidth={2}/>
               {/* Current tile shape */}
-              <path d={mpToPath(tileMP)} fill="#dbeafe" stroke="#1e40af" strokeWidth={2} />
+              <path d={mpToPath(tileMP)} fill="#bfdbfe" stroke="#1e40af" strokeWidth={2} />
               {/* Draft shape */}
               {draftShape.length>=1 && (
                 <>
@@ -478,7 +483,7 @@ export default function EscherLab() {
           <div className="flex items-center justify-between mb-2">
             <h2 className="font-semibold">2) Manual Assembly (No Auto Preview)</h2>
             <div className="flex items-center gap-2 text-sm">
-              <button onClick={addInstance} className="px-2 py-1 rounded-xl border hover:bg-gray-100">Add Tile</button>
+              <button onClick={addInstance} className="px-2 py-1 rounded-xl border hover:bg-gray-100">Place Tile</button>
               <button onClick={clearInstances} className="px-2 py-1 rounded-xl border hover:bg-gray-100">Clear Tiles</button>
               <button onClick={exportAssemblySVG} className="px-2 py-1 rounded-xl border hover:bg-gray-100">Export SVG</button>
               <button onClick={exportAssemblyPNG} className="px-2 py-1 rounded-xl border hover:bg-gray-100">Export PNG</button>
@@ -489,11 +494,11 @@ export default function EscherLab() {
             <svg ref={assemblySvgRef} width={1200} height={800} viewBox="0 0 1200 800"
               onMouseDown={onAssemblyMouseDown} onMouseMove={onAssemblyMouseMove}
               className="w-full bg-white">
-              <Grid w={1200} h={800} step={gridSize} color="#f1f5f9"/>
+              <Grid w={1200} h={800} step={gridSize} color="#d1d5db"/>
               {/* Draw each instance */}
               {instances.map(inst => (
                 <g key={inst.id} transform={`translate(${inst.x}, ${inst.y}) rotate(${inst.rot})`}>
-                  <path data-id={inst.id} d={mpToPath(tileMP)} fill="#e2e8f0" stroke="#0f172a" strokeWidth={1.5} className="cursor-move"/>
+                  <path data-id={inst.id} d={mpToPath(tileMP)} fill="#bfdbfe" stroke="#0f172a" strokeWidth={1.5} className="cursor-move"/>
                 </g>
               ))}
             </svg>
