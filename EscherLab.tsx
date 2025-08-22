@@ -407,7 +407,7 @@ export default function EscherLab() {
     <div className="w-full min-h-screen bg-[#f7f7f8] text-gray-900">
       <header className="sticky top-0 z-10 bg-white border-b">
         <div className="max-w-7xl mx-auto p-3 flex flex-wrap items-center gap-2">
-          <h1 className="text-xl font-semibold mr-4">Escher Tessellation Lab · Manual Builder</h1>
+          <h1 className="text-xl font-semibold mr-4">Escher Tessellation Lab_ dan</h1>
           {toolbarButton('Draw', mode==='draw', () => changeMode('draw'), 'Click to place polygon points; Enter closes it')}
           {toolbarButton('Union', mode==='booleanAdd', () => changeMode('booleanAdd'), 'Add polygon to tile')}
           {toolbarButton('Subtract', mode==='booleanSub', () => changeMode('booleanSub'), 'Subtract polygon from tile')}
